@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form-container form {
+  max-width: 100%;
+  display: flex;
+  padding: 35px;
+  box-shadow: rgba(3, 102, 214, 0.3) 0px 0px 0px 3px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form-container form .input-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+.form-container form .input-box label {
+  padding-bottom: 4px;
+}
+.form-container form .input-box input {
+  padding: 5px 8px;
+  border: 1px solid #d6c7ae;
+  outline: none;
+  border-radius: 8%;
+}
+.form-container form .buttons {
+  padding-top: 15px;
+}
+.form-container form .buttons .custom-btn {
+  border: none;
+  outline: none;
+  background-color: #164863;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 15px;
+  margin-bottom: 2px;
+}
+
+.actions button {
+  border: none;
+  outline: none;
+  background-color: #164863;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 15px;
+  margin-bottom: 2px;
+}/*# sourceMappingURL=style.css.map */

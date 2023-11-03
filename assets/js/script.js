@@ -18,6 +18,7 @@ async function fetchData() {
 }
 
 function addTable(data) {
+  dataTable.innerHTML = ''
   data.forEach(element => {
     let tableRow = document.createElement('tr')
     tableRow.innerHTML += `
@@ -33,8 +34,9 @@ function addTable(data) {
     editBtn.textContent = 'Edit'
     deleteBtn.textContent = 'Delete'
     deleteBtn.classList.add('delete')
+    console.log(element.id);
     editBtn.classList.add('edit')
-    editBtn.addEventListener('click', () => editPost(element.id))
+    editBtn.addEventListener('click', () => editPost(`${element.id}`))
     deleteBtn.addEventListener('click', () => deletePost(element.id))
 
     actionsBox.append(editBtn, deleteBtn)
@@ -44,8 +46,9 @@ function addTable(data) {
 }
 
 //Create
-createBtn.addEventListener('click', async e => {
+createBtn.addEventListener('click',  e => {
   e.preventDefault()
+  // dataTable.innerHTML = ''
   async function createPost() {
     try {
       await axios.post(baseUrl, {
@@ -53,24 +56,23 @@ createBtn.addEventListener('click', async e => {
         reorderLevel: reorderLevelInput.value,
         name: nameInput.value
       })
-      await fetchData()
-      nameInput.value = ''
-      priceInput.value = ''
-      reorderLevelInput.value = ''
+     fetchData()
+      // nameInput.value = ''
+      // priceInput.value = ''
+      // reorderLevelInput.value = ''
     } catch (error) {
       console.log('Error:', error)
     }
   }
-  dataTable.innerHTML = ''
-  await createPost()
+  createPost()
 })
 
 //Delete
 async function deletePost(postId) {
   try {
     await axios.delete(`${baseUrl}/${postId}`)
-    dataTable.innerHTML = ''
-    await fetchData()
+    // dataTable.innerHTML = ''
+   fetchData()
   } catch (error) {
     console.log('Error:', error)
   }
@@ -79,6 +81,9 @@ async function deletePost(postId) {
 let editPostId = null
 //Update
 async function editPost(editId) {
+  const nameInput = document.getElementById('nameInput')
+const priceInput = document.getElementById('priceInput')
+const reorderLevelInput = document.getElementById('reorderLevelInput')
   try {
     const response = await axios.get(`${baseUrl}/${editId}`)
     const data = response.data
@@ -92,24 +97,30 @@ async function editPost(editId) {
   }
 }
 
-updateBtn.addEventListener('click', async e => {
-  e.preventDefault()
-  async function updatePost() {
-    if (editPostId) {
-      try {
-        await axios.put(`${baseUrl}/${editPostId}`, {
-          unitPrice: priceInput.value,
-          reorderLevel: reorderLevelInput.value,
-          name: nameInput.value
-        })
-        await fetchData()
-      } catch (error) {
-        console.log(error)
-      }
+updateBtn.addEventListener('click',  () => {
+  console.log("Ok");
+ 
+  // dataTable.innerHTML = ''
+   updatePost()
+   fetchData()
+})
+async function updatePost() {
+  
+  if (editPostId) {
+    const nameInput = document.getElementById('nameInput').value
+const priceInput = document.getElementById('priceInput').value
+const reorderLevelInput = document.getElementById('reorderLevelInput').value
+    try {
+      await axios.put(`${baseUrl}/${editPostId}`, {
+        unitPrice: priceInput,
+        reorderLevel: reorderLevelInput,
+        name: nameInput
+      })
+     fetchData()
+    } catch (error) {
+      console.log(error)
     }
   }
-  dataTable.innerHTML = ''
-  await updatePost()
-})
+}
 
 fetchData()
